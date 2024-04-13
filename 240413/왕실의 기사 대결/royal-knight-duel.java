@@ -1,5 +1,3 @@
-package cd;
-
 import java.io.*;
 import java.util.*;
 

@@ -173,10 +173,12 @@ public class Main {
 								if(map[nx][ny] >0) {
 									cnt += map[nx][ny];
 								}
+								
+								else {
+									break;
+								}
 							}
-							else {
-								break;
-							}
+							
 						}
 					}
 					

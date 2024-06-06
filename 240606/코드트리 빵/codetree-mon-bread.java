@@ -4,23 +4,17 @@ import java.util.*;
 public class Main {
 
 	
-	static int[] dx = {-1, 0, 0, 1};
-	static int[] dy = {0, -1, 1, 0};
+//	static int[] dx = {-1, 0, 0, 1};
+//	static int[] dy = {0, -1, 1, 0};
 	
-	static int stoi(String s) {
-		return Integer.parseInt(s);
-	}
 	
-	static boolean isRange(int x, int y) {
-		return 0<=x && x<n && 0<=y && y<n;
-	}
 	
-	static int n,m;
-	static int[][] map;
-	
-	static Node[] person;
-	static Node[] store;
-	static int time;
+//	static int n,m;
+//	static int[][] map;
+//	
+//	static Node[] person;
+//	static Node[] store;
+//	static int time;
 	
 	static class Node implements Comparable<Node>{
 		int x,y,dir, dist;
@@ -62,6 +56,18 @@ public class Main {
 		}
 		
 	}
+	
+	// 상좌우하
+		static int[] dx = {-1, 0, 0, 1};
+		static int[] dy = {0, -1, 1, 0};
+		
+		static int n, m;
+		static int[][] map; // 0 빈 공간, 1 베이스캠프, 2 지나갈 수 없는 곳
+		
+		static Node[] person;
+		static Node[] store;
+		
+		static int time;
 	
 	
 	public static void main(String[] args) throws IOException {
@@ -209,6 +215,14 @@ public class Main {
 		}
 		
 		return true;
+	}
+	
+	static int stoi(String s) {
+		return Integer.parseInt(s);
+	}
+	
+	static boolean isRange(int x, int y) {
+		return 0<=x && x<n && 0<=y && y<n;
 	}
 	
 }

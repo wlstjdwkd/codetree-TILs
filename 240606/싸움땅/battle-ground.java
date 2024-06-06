@@ -6,7 +6,7 @@ public class Main {
 	static int N,M,K;
 	
 	//이거 priorityqueue로 바꿔보자
-	static List<Integer>[][] gun;
+	static PriorityQueue<Integer>[][] gun;
 	static int[][] people;
 	static class Person{
 		int number, power, gun, d, x, y;
@@ -51,13 +51,13 @@ public class Main {
 		K = stoi(st.nextToken());
 		score = new int[M+1];
 		
-		gun = new ArrayList[N][N];
+		gun = new PriorityQueue[N][N];
 		
 		people = new int[N][N];
 		
 		for(int i=0; i<N; i++) {
 			for(int j=0; j<N; j++) {
-				gun[i][j] = new ArrayList<>();
+				gun[i][j] = new PriorityQueue<>(Comparator.reverseOrder());
 			}
 		}
 		
@@ -107,23 +107,16 @@ public class Main {
 			}
 			if(people[nx][ny] == 0) {
 				//해당 위치에 사람이 없는 경우
-				if(gun[nx][ny].size() != 0) {
-					//해당 위치에 총이 있는 경우
+				
+				if(!gun[nx][ny].isEmpty()) {
 					int max = player.gun;
-					int max_idx = -1;
-					for(int i=0; i<gun[nx][ny].size(); i++) {
-						int g = gun[nx][ny].get(i);
-						if(max < g) {
-							max = g;
-							max_idx = i;
-						}
-					}
-					if(max_idx != -1) {
-						gun[nx][ny].remove(max_idx);
+					int newGun = gun[nx][ny].peek();
+					if(max < newGun) {
+						gun[nx][ny].poll();
 						if(player.gun!=0) {
 							gun[nx][ny].add(player.gun);
 						}
-						player.gun = max;
+						player.gun = newGun;
 					}
 				}
 				
@@ -178,17 +171,12 @@ public class Main {
     					break;
     				}
     				
-    				int max = 0; int max_idx = -1;
-    				for(int i=0; i<gun[v.x][v.y].size(); i++) {
-    					int g = gun[v.x][v.y].get(i);
-    					if(max < g) {
-    						max = g; max_idx = i;
-    					}
-    				}
-    				if(max_idx != -1) {
-    					gun[v.x][v.y].remove(max_idx);
-    					v.gun = max;
-    				}
+    				int max = 0;
+                    if (!gun[v.x][v.y].isEmpty()) {
+                        max = gun[v.x][v.y].peek();
+                        gun[v.x][v.y].poll();
+                    }
+                    v.gun = max;
     				p.offer(v); // v의 모든 정보가 갱신되었으므로 queue에 넣는다.
     			}
     			else {
@@ -214,17 +202,12 @@ public class Main {
     					now.d = (now.d + d) % 4;
     					break;
     				}
-    				int max = 0; int max_idx = -1;
-    				for(int i=0; i<gun[now.x][now.y].size(); i++) {
-    					int g = gun[now.x][now.y].get(i);
-    					if(max < g) {
-    						max = g; max_idx = i;
-    					}
-    				}
-    				if(max_idx != -1) {
-    					gun[now.x][now.y].remove(max_idx);
-    					now.gun = max;
-    				}
+    				int max = 0;
+                    if (!gun[now.x][now.y].isEmpty()) {
+                        max = gun[now.x][now.y].peek();
+                        gun[now.x][now.y].poll();
+                    }
+                    now.gun = max;
     			}
     		}
     	}

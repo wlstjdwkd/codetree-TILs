@@ -1,122 +1,112 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class Main {
-
 	
-//	static int[] dx = {-1, 0, 0, 1};
-//	static int[] dy = {0, -1, 1, 0};
-	
-	
-	
-//	static int n,m;
-//	static int[][] map;
-//	
-//	static Node[] person;
-//	static Node[] store;
-//	static int time;
-	
-	static class Node implements Comparable<Node>{
-		int x,y,dir, dist;
-
+	static class Node implements Comparable<Node> {
+		int x;
+		int y;
+		int dir;
+		int dist;
+		
+		public Node(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+		
+		public Node(int x, int y, int dist) {
+			this.x = x;
+			this.y = y;
+			this.dist = dist;
+		}
+		
 		public Node(int x, int y, int dir, int dist) {
-			super();
 			this.x = x;
 			this.y = y;
 			this.dir = dir;
 			this.dist = dist;
 		}
-
-		public Node(int x, int y) {
-			super();
-			this.x = x;
-			this.y = y;
-		}
-
-		public Node(int x, int y, int dist) {
-			super();
-			this.x = x;
-			this.y = y;
-			this.dist = dist;
-		}
-
-		@Override
-		public int compareTo(Main.Node o) {
-			if(this.dist == o.dist) {
-				if(this.x == o.dist) {
-					return this.y - o.y;
-				}
-				return this.x - o.x;
-			}
-			return this.dist - o.dist;
-		}
 		
 		public boolean isSame(Node node) {
 			return this.x == node.x && this.y == node.y;
 		}
-		
+
+		@Override
+		public int compareTo(Node o) {
+			if (this.dist == o.dist) {
+				if (this.x == o.x) {
+					return this.y - o.y;
+				}
+				
+				return this.x - o.x;
+			}
+			
+			return this.dist - o.dist;
+		}
 	}
 	
 	// 상좌우하
-		static int[] dx = {-1, 0, 0, 1};
-		static int[] dy = {0, -1, 1, 0};
-		
-		static int n, m;
-		static int[][] map; // 0 빈 공간, 1 베이스캠프, 2 지나갈 수 없는 곳
-		
-		static Node[] person;
-		static Node[] store;
-		
-		static int time;
+	static int[] dx = {-1, 0, 0, 1};
+	static int[] dy = {0, -1, 1, 0};
 	
+	static int n, m;
+	static int[][] map; // 0 빈 공간, 1 베이스캠프, 2 지나갈 수 없는 곳
 	
-		public static void main(String[] args) throws IOException {
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			
-			n = Integer.parseInt(st.nextToken());
-			m = Integer.parseInt(st.nextToken());
-			
-			map = new int[n][n];
-			person = new Node[m];
-			store = new Node[m];
-			
-			for (int i = 0; i < n; i++) {
-				st = new StringTokenizer(br.readLine());
-				
-				for (int j = 0; j < n; j++) {
-					map[i][j] = Integer.parseInt(st.nextToken());
-				}
-			}
+	static Node[] person;
+	static Node[] store;
+	
+	static int time;
 
-			for (int i = 0; i < m; i++) {
-				st = new StringTokenizer(br.readLine());
-				
-				int x = Integer.parseInt(st.nextToken()) - 1;
-				int y = Integer.parseInt(st.nextToken()) - 1;
-				
-				store[i] = new Node(x, y);
-				person[i] = new Node(-1, -1);
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		
+		map = new int[n][n];
+		person = new Node[m];
+		store = new Node[m];
+		
+		for (int i = 0; i < n; i++) {
+			st = new StringTokenizer(br.readLine());
+			
+			for (int j = 0; j < n; j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
 			}
-			
-			time = 1;
-			
-			while (true) {
-				moveStore();
-				
-				if (time <= m) {
-					moveBasecamp(store[time - 1]);	
-				}
-				
-				if (isFinish()) {
-					break;
-				}
-				
-				time++;
-			}
-			
-			System.out.println(time);
 		}
+
+		for (int i = 0; i < m; i++) {
+			st = new StringTokenizer(br.readLine());
+			
+			int x = Integer.parseInt(st.nextToken()) - 1;
+			int y = Integer.parseInt(st.nextToken()) - 1;
+			
+			store[i] = new Node(x, y);
+			person[i] = new Node(-1, -1);
+		}
+		
+		time = 1;
+		
+		while (true) {
+			moveStore();
+			
+			if (time <= m) {
+				moveBasecamp(store[time - 1]);	
+			}
+			
+			if (isFinish()) {
+				break;
+			}
+			
+			time++;
+		}
+		
+		System.out.println(time);
+	}
 	
 	private static void moveStore() {
 		for (int i = 0; i < m; i++) {
@@ -217,12 +207,8 @@ public class Main {
 		return true;
 	}
 	
-	static int stoi(String s) {
-		return Integer.parseInt(s);
+	private static boolean isRange(int x, int y) {
+		return x >= 0 && x < n && y >= 0 && y < n;
 	}
-	
-	static boolean isRange(int x, int y) {
-		return 0<=x && x<n && 0<=y && y<n;
-	}
-	
+
 }

@@ -70,53 +70,53 @@ public class Main {
 		static int time;
 	
 	
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
-		
-		map = new int[n][n];
-		person = new Node[m];
-		store = new Node[m];
-		
-		for (int i = 0; i < n; i++) {
-			st = new StringTokenizer(br.readLine());
+		public static void main(String[] args) throws IOException {
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			StringTokenizer st = new StringTokenizer(br.readLine());
 			
-			for (int j = 0; j < n; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken());
+			n = Integer.parseInt(st.nextToken());
+			m = Integer.parseInt(st.nextToken());
+			
+			map = new int[n][n];
+			person = new Node[m];
+			store = new Node[m];
+			
+			for (int i = 0; i < n; i++) {
+				st = new StringTokenizer(br.readLine());
+				
+				for (int j = 0; j < n; j++) {
+					map[i][j] = Integer.parseInt(st.nextToken());
+				}
 			}
-		}
 
-		for (int i = 0; i < m; i++) {
-			st = new StringTokenizer(br.readLine());
-			
-			int x = Integer.parseInt(st.nextToken()) - 1;
-			int y = Integer.parseInt(st.nextToken()) - 1;
-			
-			store[i] = new Node(x, y);
-			person[i] = new Node(-1, -1);
-		}
-		
-		time = 1;
-		
-		while (true) {
-			moveStore();
-			
-			if (time <= m) {
-				moveBasecamp(store[time - 1]);	
+			for (int i = 0; i < m; i++) {
+				st = new StringTokenizer(br.readLine());
+				
+				int x = Integer.parseInt(st.nextToken()) - 1;
+				int y = Integer.parseInt(st.nextToken()) - 1;
+				
+				store[i] = new Node(x, y);
+				person[i] = new Node(-1, -1);
 			}
 			
-			if (isFinish()) {
-				break;
+			time = 1;
+			
+			while (true) {
+				moveStore();
+				
+				if (time <= m) {
+					moveBasecamp(store[time - 1]);	
+				}
+				
+				if (isFinish()) {
+					break;
+				}
+				
+				time++;
 			}
 			
-			time++;
+			System.out.println(time);
 		}
-		
-		System.out.println(time);
-	}
 	
 	private static void moveStore() {
 		for (int i = 0; i < m; i++) {

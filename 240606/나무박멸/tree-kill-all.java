@@ -22,7 +22,7 @@ public class Main {
 		}
 
 		@Override
-		public int compareTo(Main.Point o) {
+		public int compareTo(Point o) {
 			
 			if(o.x == x) {
 				return this.y-o.y;
@@ -55,7 +55,7 @@ public class Main {
 		n = stoi(st.nextToken());
 		m = stoi(st.nextToken());
 		k= stoi(st.nextToken());
-		c = stoi(st.nextToken());
+		c = stoi(st.nextToken())+1;
 		
 		map = new int[n][n];
 		for(int i=0; i<n; i++) {

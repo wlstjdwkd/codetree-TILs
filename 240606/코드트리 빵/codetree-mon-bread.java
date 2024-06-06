@@ -1,8 +1,5 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
@@ -68,52 +65,51 @@ public class Main {
 	
 	
 	public static void main(String[] args) throws IOException {
-		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		n = stoi(st.nextToken());
-		m = stoi(st.nextToken());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
 		
 		map = new int[n][n];
 		person = new Node[m];
 		store = new Node[m];
 		
-		for(int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
 			
-			for(int j=0; j<n; j++) {
-				map[i][j] = stoi(st.nextToken());
+			for (int j = 0; j < n; j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		
-		for(int i=0; i<m; i++) {
+
+		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(br.readLine());
 			
-			int x = stoi(st.nextToken())-1;
-			int y = stoi(st.nextToken())-1;
+			int x = Integer.parseInt(st.nextToken()) - 1;
+			int y = Integer.parseInt(st.nextToken()) - 1;
 			
-			store[i] = new Node(x,y);
+			store[i] = new Node(x, y);
 			person[i] = new Node(-1, -1);
 		}
 		
 		time = 1;
 		
-		while(true) {
+		while (true) {
 			moveStore();
 			
-			if(time<=m) {
-				moveBasecamp(store[time -1]);
+			if (time <= m) {
+				moveBasecamp(store[time - 1]);	
 			}
 			
-			if(isFinish()) {
+			if (isFinish()) {
 				break;
 			}
 			
 			time++;
 		}
-		System.out.println(time);
 		
+		System.out.println(time);
 	}
 	
 	private static void moveStore() {

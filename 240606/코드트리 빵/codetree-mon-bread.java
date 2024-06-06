@@ -137,53 +137,18 @@ public class Main {
 	}
 	
 	
-	// 가고싶은 편의점까지 최단거리가 되는 방향을 구함
-		private static int findDir(Node start, Node end) {
-			PriorityQueue<Node> pq = new PriorityQueue<>();
-			boolean[][] visited = new boolean[n][n];
-			
-			pq.add(new Node(start.x, start.y, -1, 0));
-			visited[start.x][start.y] = true;
-			
-			while (!pq.isEmpty()) {
-				Node cur = pq.poll();
-				
-				// 편의점으로 가는 최단거리가 여러 개가 될수도 있음
-				if (cur.isSame(end)) {
-					return cur.dir;
-				}
-				
-				for (int i = 0; i < 4; i++) {
-					int nx = cur.x + dx[i];
-					int ny = cur.y + dy[i];
-					
-					if (!isRange(nx, ny) || visited[nx][ny] || map[nx][ny] == 2) {
-						continue;
-					}
-					
-					pq.add(new Node(nx, ny, cur.dir == -1 ? i : cur.dir, cur.dist + 1));
-					visited[nx][ny] = true;
-				}
-			}
-			
-			return 0;
-		}
-	
-	private static void moveBasecamp(Node start) {
+	private static int findDir(Node start, Node end) {
 		PriorityQueue<Node> pq = new PriorityQueue<>();
 		boolean[][] visited = new boolean[n][n];
 		
-		pq.add(new Node(start.x, start.y, 0));
+		pq.add(new Node(start.x, start.y, -1, 0));
 		visited[start.x][start.y] = true;
 		
 		while(!pq.isEmpty()) {
 			Node cur = pq.poll();
 			
-			if(map[cur.x][cur.y] == 1) {
-				map[cur.x][cur.y] =2;
-				person[time-1] = cur;
-				
-				return;
+			if(cur.isSame(end)) {
+				return cur.dir;
 			}
 			
 			for(int i=0; i<4; i++) {
@@ -194,11 +159,45 @@ public class Main {
 					continue;
 				}
 				
-				pq.add(new Node(nx,ny, cur.dist+1));
+				pq.add(new Node(nx, ny, cur.dir==-1 ? i : cur.dir, cur.dist+1));
 				visited[nx][ny] = true;
 			}
 		}
 		
+		return 0;
+		
+	}
+	
+	private static void moveBasecamp(Node start) {
+		PriorityQueue<Node> pq = new PriorityQueue<>();
+		boolean[][] visited = new boolean[n][n];
+		
+		pq.add(new Node(start.x, start.y, 0));
+		visited[start.x][start.y] = true;
+		
+		while (!pq.isEmpty()) {
+			Node cur = pq.poll();
+			
+			// 최단거리가 같은 베이스캠프가 여러 개 있을 수도 있음
+			if (map[cur.x][cur.y] == 1) {
+				map[cur.x][cur.y] = 2;
+				person[time - 1] = cur;
+				
+				return;
+			}
+			
+			for (int i = 0; i < 4; i++) {
+				int nx = cur.x + dx[i];
+				int ny = cur.y + dy[i];
+				
+				if (!isRange(nx, ny) || visited[nx][ny] || map[nx][ny] == 2) {
+					continue;
+				}
+				
+				pq.add(new Node(nx, ny, cur.dist + 1));
+				visited[nx][ny] = true;
+			}
+		}
 	}
 	
 	private static boolean isFinish() {

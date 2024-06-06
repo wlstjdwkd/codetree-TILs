@@ -65,60 +65,61 @@ public class Main {
 	
 	
 	public static void main(String[] args) throws IOException {
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
+		n = stoi(st.nextToken());
+		m = stoi(st.nextToken());
 		
 		map = new int[n][n];
 		person = new Node[m];
 		store = new Node[m];
 		
-		for (int i = 0; i < n; i++) {
+		for(int i=0; i<n; i++) {
 			st = new StringTokenizer(br.readLine());
 			
-			for (int j = 0; j < n; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken());
+			for(int j=0; j<n; j++) {
+				map[i][j] = stoi(st.nextToken());
 			}
 		}
-
-		for (int i = 0; i < m; i++) {
+		
+		for(int i=0; i<m; i++) {
 			st = new StringTokenizer(br.readLine());
 			
-			int x = Integer.parseInt(st.nextToken()) - 1;
-			int y = Integer.parseInt(st.nextToken()) - 1;
+			int x = stoi(st.nextToken())-1;
+			int y = stoi(st.nextToken())-1;
 			
-			store[i] = new Node(x, y);
+			store[i] = new Node(x,y);
 			person[i] = new Node(-1, -1);
 		}
 		
 		time = 1;
 		
-		while (true) {
+		while(true) {
 			moveStore();
 			
-			if (time <= m) {
-				moveBasecamp(store[time - 1]);	
+			if(time<=m) {
+				moveBasecamp(store[time -1]);
 			}
 			
-			if (isFinish()) {
+			if(isFinish()) {
 				break;
 			}
 			
 			time++;
 		}
-		
 		System.out.println(time);
+		
 	}
 	
 	private static void moveStore() {
-		for(int i=0; i<m; i++) {
+		for (int i = 0; i < m; i++) {
 			Node start = person[i];
 			Node end = store[i];
 			
-			//격자 밖에 있거나 편의점에 도착한 경우 다음으로 넘어감
-			if(!isRange(start.x, start.y) || start.isSame(end)) {
+			// 격자 밖에 있거나 편의점에 도착한 경우 다음으로 넘어감
+			if (!isRange(start.x, start.y) || start.isSame(end)) {
 				continue;
 			}
 			
@@ -128,9 +129,10 @@ public class Main {
 			start.y += dy[dir];
 		}
 		
-		for(int i=0; i<m; i++) {
-			if(person[i].isSame(store[i])) {
-				map[person[i].x][person[i].y] = 2;
+		// 모두 움직인 후에 편의점에 도착했는지 확인
+		for (int i = 0; i < m; i++) {
+			if (person[i].isSame(store[i])) { 
+				map[person[i].x][person[i].y] = 2; // 지나갈 수 없는 곳으로 변경
 			}
 		}
 	}
@@ -192,7 +194,7 @@ public class Main {
 					continue;
 				}
 				
-				pq.add(new Node(nx, ny, cur.dist+1));
+				pq.add(new Node(nx,ny, cur.dist+1));
 				visited[nx][ny] = true;
 			}
 		}

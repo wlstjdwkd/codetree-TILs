@@ -1,5 +1,8 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class Main {
 
@@ -193,7 +196,7 @@ public class Main {
 					continue;
 				}
 				
-				pq.add(new Node(nx,ny, cur.dist+1));
+				pq.add(new Node(nx, ny, cur.dist+1));
 				visited[nx][ny] = true;
 			}
 		}

@@ -200,14 +200,15 @@ public class Main {
 		}
 	}
 	
-	private static boolean isFinish() {
-		for(int i=0; i<m; i++) {
-			if(!person[i].isSame(store[i])) {
-				return false;
+	// 모든 사람이 편의점에 도착했는지 확인
+		private static boolean isFinish() {
+			for (int i = 0; i < m; i++) {
+				if (!person[i].isSame(store[i])) {
+					return false;
+				}
 			}
+			
+			return true;
 		}
-		
-		return true;
-	}
 
 }

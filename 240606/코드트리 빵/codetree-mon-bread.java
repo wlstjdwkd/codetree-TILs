@@ -114,12 +114,12 @@ public class Main {
 	}
 	
 	private static void moveStore() {
-		for (int i = 0; i < m; i++) {
+		for(int i=0; i<m; i++) {
 			Node start = person[i];
 			Node end = store[i];
 			
-			// 격자 밖에 있거나 편의점에 도착한 경우 다음으로 넘어감
-			if (!isRange(start.x, start.y) || start.isSame(end)) {
+			//격자 밖에 있거나 편의점에 도착한 경우 다음으로 넘어감
+			if(!isRange(start.x, start.y) || start.isSame(end)) {
 				continue;
 			}
 			
@@ -129,45 +129,45 @@ public class Main {
 			start.y += dy[dir];
 		}
 		
-		// 모두 움직인 후에 편의점에 도착했는지 확인
-		for (int i = 0; i < m; i++) {
-			if (person[i].isSame(store[i])) { 
-				map[person[i].x][person[i].y] = 2; // 지나갈 수 없는 곳으로 변경
+		for(int i=0; i<m; i++) {
+			if(person[i].isSame(store[i])) {
+				map[person[i].x][person[i].y] = 2;
 			}
 		}
 	}
 	
 	
-	private static int findDir(Node start, Node end) {
-		PriorityQueue<Node> pq = new PriorityQueue<>();
-		boolean[][] visited = new boolean[n][n];
-		
-		pq.add(new Node(start.x, start.y, -1, 0));
-		visited[start.x][start.y] = true;
-		
-		while(!pq.isEmpty()) {
-			Node cur = pq.poll();
+	// 가고싶은 편의점까지 최단거리가 되는 방향을 구함
+		private static int findDir(Node start, Node end) {
+			PriorityQueue<Node> pq = new PriorityQueue<>();
+			boolean[][] visited = new boolean[n][n];
 			
-			if(cur.isSame(end)) {
-				return cur.dir;
-			}
+			pq.add(new Node(start.x, start.y, -1, 0));
+			visited[start.x][start.y] = true;
 			
-			for(int i=0; i<4; i++) {
-				int nx = cur.x + dx[i];
-				int ny = cur.y + dy[i];
+			while (!pq.isEmpty()) {
+				Node cur = pq.poll();
 				
-				if(!isRange(nx,ny) || visited[nx][ny] || map[nx][ny] == 2) {
-					continue;
+				// 편의점으로 가는 최단거리가 여러 개가 될수도 있음
+				if (cur.isSame(end)) {
+					return cur.dir;
 				}
 				
-				pq.add(new Node(nx, ny, cur.dir==-1 ? i : cur.dir, cur.dist+1));
-				visited[nx][ny] = true;
+				for (int i = 0; i < 4; i++) {
+					int nx = cur.x + dx[i];
+					int ny = cur.y + dy[i];
+					
+					if (!isRange(nx, ny) || visited[nx][ny] || map[nx][ny] == 2) {
+						continue;
+					}
+					
+					pq.add(new Node(nx, ny, cur.dir == -1 ? i : cur.dir, cur.dist + 1));
+					visited[nx][ny] = true;
+				}
 			}
+			
+			return 0;
 		}
-		
-		return 0;
-		
-	}
 	
 	private static void moveBasecamp(Node start) {
 		PriorityQueue<Node> pq = new PriorityQueue<>();

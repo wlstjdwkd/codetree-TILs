@@ -122,9 +122,8 @@ public class Main {
 			nr[x] += dx[dir];
 			nc[x] += dy[dir];
 			
-			if(!isRange(nr[x], nc[x])) {
-				return false;
-			}
+			if(nr[x] < 1 || nc[x] < 1 || nr[x] + h[x] - 1 > l || nc[x] + w[x] - 1 > l)
+                return false;
 			
 			for(int i = nr[x]; i<= nr[x] + h[x] -1; i++) {
 				for(int j=nc[x]; j<= nc[x] + w[x]-1; j++) {

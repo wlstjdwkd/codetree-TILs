@@ -97,31 +97,37 @@ public class Main {
 		score += rMax;
 	}
 	
-	private static void moveGolem(int idx) {
-		v[idx] = true;
-		
-		Golem curGol = golem[idx];
-		
-		int ri = curGol.x +2;
-		rMax = ri > rMax ? ri : rMax;
-		
-		int e = curGol.dir;
-		ri = curGol.x + di[e];
-		int rj = curGol.y + dj[e];
-		
-		for(int d = 0; d<4; d++) {
-			int ni = ri+di[d];
-			int nj = rj + dj[d];
-			
-			if(isRange(ni,nj)) {
-				if(m[ni][nj] == -1 || v[m[ni][nj]]) {
-					continue;
-				}
-				
-				moveGolem(m[ni][nj]);
-			}
-		}
-	}
+private static void moveGolem(int startIdx) {
+    Queue<Integer> queue = new LinkedList<>();
+    queue.add(startIdx);
+    v[startIdx] = true;
+    
+    while (!queue.isEmpty()) {
+        int idx = queue.poll();
+        Golem curGol = golem[idx];
+        
+        int ri = curGol.x + 2;
+        rMax = ri > rMax ? ri : rMax;
+        
+        int e = curGol.dir;
+        ri = curGol.x + di[e];
+        int rj = curGol.y + dj[e];
+        
+        for (int d = 0; d < 4; d++) {
+            int ni = ri + di[d];
+            int nj = rj + dj[d];
+            
+            if (isRange(ni, nj)) {
+                if (m[ni][nj] == -1 || v[m[ni][nj]]) {
+                    continue;
+                }
+                
+                queue.add(m[ni][nj]);
+                v[m[ni][nj]] = true;
+            }
+        }
+    }
+}
 	
 	private static void initMap() {
 		m = new int[R][C];

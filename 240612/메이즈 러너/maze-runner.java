@@ -46,7 +46,7 @@ public class Main {
 		
 		board = new int[n+1][n+1];
 		nextBoard = new int[n+1][n+1];
-		traveler = new Pair[n+1];
+		traveler = new Pair[m+1];
 		
 		for(int i=1; i<=n; i++) {
 			st = new StringTokenizer(br.readLine());

@@ -83,7 +83,7 @@ public class Main {
 		rec = new int[n][m];
 		
 		backX = new int[n][m];
-		backY = new int[n][m]
+		backY = new int[n][m];
 		
 		for(int i=0; i<n; i++) {
 			st = new StringTokenizer(br.readLine());

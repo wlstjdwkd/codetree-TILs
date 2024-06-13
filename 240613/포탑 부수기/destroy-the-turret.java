@@ -72,7 +72,7 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
 		n = stoi(st.nextToken());
-		m=stoi(st.nextToken());
+		m = stoi(st.nextToken());
 		k = stoi(st.nextToken());
 		
 		board = new int[n][m];
@@ -192,10 +192,10 @@ public class Main {
 			int x = pair.x;
 			int y = pair.y;
 			
-			if(x==ex && y == ey) {
-				canAttack = true;
-				break;
-			}
+//			if(x==ex && y == ey) {
+//				canAttack = true;
+//				break;
+//			}
 			
 			for(int dir = 0; dir<4; dir++) {
 				int nx = (x+dx[dir] + n) %n;
@@ -214,6 +214,13 @@ public class Main {
 				q.add(new Pair(nx,ny));
 			}
 		}
+		if(!vis[ex][ey]) {
+			return false;
+		}
+		else {
+			canAttack = true;
+		}
+		
 		
 		if(canAttack) {
 			int x = ex;

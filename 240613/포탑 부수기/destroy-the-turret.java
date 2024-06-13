@@ -83,7 +83,7 @@ public class Main {
 		rec = new int[n][m];
 		
 		backX = new int[n][m];
-		backY = new int[n][m];
+		backY = new int[n][m]
 		
 		for(int i=0; i<n; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -199,10 +199,10 @@ public class Main {
 			int x = pair.x;
 			int y = pair.y;
 			
-//			if(x==ex && y == ey) {
-//				canAttack = true;
-//				break;
-//			}
+			if(x==ex && y == ey) {
+				canAttack = true;
+				break;
+			}
 			
 			for(int dir = 0; dir<4; dir++) {
 				int nx = (x+dx[dir] + n) %n;
@@ -221,9 +221,6 @@ public class Main {
 				q.add(new Pair(nx,ny));
 			}
 		}
-		if(vis[ex][ey]) {
-			canAttack = true;
-		}
 		
 		if(canAttack) {
 			int x = ex;
@@ -235,6 +232,9 @@ public class Main {
 				}
 				
 				board[x][y] -= power;
+				if(board[x][y] <0) {
+					board[x][y] = 0;
+				}
 				isActive[x][y] = true;
 				Pair pair = come[x][y];
 				x = pair.x;

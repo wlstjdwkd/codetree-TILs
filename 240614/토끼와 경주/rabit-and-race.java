@@ -26,7 +26,8 @@ public class Main {
 	}
 	
 	private static class Rabbit implements Comparable<Rabbit>{
-		int x,y,j,id,d, score;
+		int x,y,j,id,d;
+		long score;
 		boolean runned;
 
 		public Rabbit(int x, int y, int j, int id, int d) {
@@ -58,7 +59,7 @@ public class Main {
 	private static int n,m,p;
 	private static Pair[] point;
 	
-	private static int totalSum;
+	private static long totalSum;
 	
 	
 	static int stoi(String s) {
@@ -104,7 +105,7 @@ public class Main {
 	private static void print() {
 		long ans = 0;
 		for(int i=0; i<rabbit.size(); i++) {
-			ans = Math.max(ans, rabbit.get(i).score);
+			ans = Math.max(ans, rabbit.get(i).score + totalSum);
 		}
 		System.out.println(ans);
 	}
@@ -221,7 +222,6 @@ public class Main {
 		int k = stoi(st.nextToken());
 		int bonus = stoi(st.nextToken());
 		
-		totalSum = 0;
 		
 		for(int i=0; i<rabbit.size(); i++) {
 			rabbit.get(i).runned = false;
@@ -260,7 +260,6 @@ public class Main {
 			if(curRabbit.runned) {
 				curRabbit.score += bonus;
 			}
-			curRabbit.score += totalSum;
 		}
 	}
 	

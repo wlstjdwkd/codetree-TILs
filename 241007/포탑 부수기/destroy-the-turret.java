@@ -157,15 +157,19 @@ public class Main {
 			
 			for(int dir = 0; dir<4; dir++) {
 				int nx = (x+dx[dir] + n) %n;
-				int ny = (y+dy[dir] + m) % m;
+				int ny = (y + dy[dir] + m) %m;
 				
-				if(!vis[nx][ny]) {
-					if(board[nx][ny] != 0) {
-						vis[nx][ny] = true;
-						q.add(new Pair(nx,ny));
-						come[nx][ny] = new Pair(pair.x,pair.y);
-					}
+				if(vis[nx][ny]) {
+					continue;
 				}
+				
+				if(board[nx][ny] == 0) {
+					continue;
+				}
+				
+				vis[nx][ny] = true;
+				come[nx][ny] = new Pair(pair.x, pair.y);
+				q.add(new Pair(nx,ny));
 			}
 		}
 		

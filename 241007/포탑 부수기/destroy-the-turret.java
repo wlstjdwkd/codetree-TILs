@@ -3,16 +3,13 @@ import java.util.*;
 
 public class Main {
 	
-	
-	
 	private static final int[] dx = {0,1,0,-1};
 	private static final int[] dy = {1, 0, -1, 0};
 	
-	private static final int[] dx2 = new int[]{0, 0, 0, -1, -1, -1, 1, 1, 1};
-    private static final int[] dy2 = new int[]{0, -1, 1, 0, -1, 1, 0, -1, 1};
+	private static final int[] dx2 = {0, 0, 0, -1, -1, -1, 1, 1, 1};
+    private static final int[] dy2 = {0, -1, 1, 0, -1, 1, 0, -1, 1};
 	
     private static int n,m,k;
-    private static int turn;
     
     private static int[][] board;
     private static int[][] rec;
@@ -21,10 +18,6 @@ public class Main {
     private static boolean[][] isActive;
     
     private static List<Turret> liveTurret = new ArrayList<>();
-    
-    private static int[][] backX;
-    private static int[][] backY;
-    
     
 //	private static boolean isRange(int x, int y) {
 //		return 0 <= x && x<l && 0<= y && y<l;
@@ -84,8 +77,6 @@ public class Main {
 		// TODO Auto-generated method stub
 		init();
 		
-		
-		
 		for(int tc=1; tc<=k; tc++) {
 			liveTurret = new ArrayList<>();
 			for(int i=0; i<n; i++) {
@@ -143,7 +134,6 @@ public class Main {
 		
 		int sx = weakTurret.x;
 		int sy = weakTurret.y;
-		int pow = weakTurret.p;
 		
 		Turret strongTurret = liveTurret.get(liveTurret.size()-1);
 		int ex = strongTurret.x;
@@ -173,7 +163,7 @@ public class Main {
 					if(board[nx][ny] != 0) {
 						vis[nx][ny] = true;
 						q.add(new Pair(nx,ny));
-						come[nx][ny] = new Pair(x,y);
+						come[nx][ny] = new Pair(pair.x,pair.y);
 					}
 				}
 			}

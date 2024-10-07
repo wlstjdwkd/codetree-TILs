@@ -157,19 +157,15 @@ public class Main {
 			
 			for(int dir = 0; dir<4; dir++) {
 				int nx = (x+dx[dir] + n) %n;
-				int ny = (y + dy[dir] + m) %m;
+				int ny = (y+dy[dir] + m) % m;
 				
-				if(vis[nx][ny]) {
-					continue;
+				if(!vis[nx][ny]) {
+					if(board[nx][ny] != 0) {
+						vis[nx][ny] = true;
+						q.add(new Pair(nx,ny));
+						come[nx][ny] = new Pair(x,y);
+					}
 				}
-				
-				if(board[nx][ny] == 0) {
-					continue;
-				}
-				
-				vis[nx][ny] = true;
-				come[nx][ny] = new Pair(pair.x, pair.y);
-				q.add(new Pair(nx,ny));
 			}
 		}
 		
@@ -209,14 +205,14 @@ public class Main {
 		int ey = strongTurret.y;
 		
 		for(int dir = 0; dir<9; dir++) {
-			int nx = (ex+dx2[dir] +n)%n;
-			int ny = (ey+dy2[dir] + m) % m;
+			int nx = (ex + dx2[dir] + n) % n;
+			int ny = (ey + dy2[dir] + m) % m;
 			
 			if(nx == sx && ny == sy) {
 				continue;
 			}
 			
-			if(nx == ex && ny == sy) {
+			if(nx == ex && ny == ey) {
 				board[nx][ny] -= pow;
 			}
 			else {

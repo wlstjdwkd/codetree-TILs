@@ -119,7 +119,7 @@ public class Main {
 	
 	private static boolean tryMovement(int idx, int dir) {
 		Queue<Integer> q = new ArrayDeque<>();
-		is_moved[idx] = true;
+		
 		
 		for(int i=1; i<=n; i++) {
 			dmg[i] = 0;
@@ -128,6 +128,7 @@ public class Main {
 			is_moved[i] = false;
 		}
 		
+		is_moved[idx] = true;
 		q.add(idx);
 		
 		while(!q.isEmpty()) {

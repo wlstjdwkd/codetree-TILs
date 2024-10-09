@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {	
+public class Main {
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private static StringTokenizer st;
 	private static final int[] dx = {-1, 0, 1, 0};
@@ -219,8 +219,8 @@ public class Main {
 		
 		if(!isRange(nx, ny)) {
 			moveDir = (moveDir<2) ? (1-moveDir) : (5-moveDir);
-			nx = x+ dx[moveDir];
-			ny = y+ dy[moveDir];
+			nx = x+ dx2[moveDir];
+			ny = y+ dy2[moveDir];
 		}
 		
 		if(!new Pair(nx, ny).isSame(seekPos)) {

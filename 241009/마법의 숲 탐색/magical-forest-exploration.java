@@ -2,14 +2,13 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	private static StringTokenizer st;
+	private static final int[] dx = {-1,0,1,0};
+	private static final int[] dy = {0,1,0,-1};
 	
-	private static int R,C,K,score,rMax;
-	private static int[][] m;
-	private static Golem[] golem;
-	
-	private static final int[] di = {-1,0,1,0};
-	private static final int[] dj = {0,1,0,-1};
-	private static boolean[] v;
+//    public static int[] dx = new int[]{0, -1, -1, -1,  0,  1, 1, 1};
+//    public static int[] dy = new int[]{1,  1,  0, -1, -1, -1, 0, 1};
 	
 	private static boolean isRange(int x, int y) {
 		return 0 <= x && x<R && 0<= y && y<C;
@@ -18,6 +17,15 @@ public class Main {
 	private static int stoi(String s) {
 		return Integer.parseInt(s);
 	}
+	
+	//=====================================================================
+	
+	private static int R,C,K, score, rMax;
+	private static int[][] m;
+	private static Golem[] golem;
+	
+	private static boolean[] v;
+	
 	
 	private static class Golem{
 		int x, y, dir;
@@ -30,19 +38,32 @@ public class Main {
 		}
 		
 	}
-
-	public static void main(String[] args) throws IOException{
-		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+	
+	private static void init() throws IOException{
+		st = new StringTokenizer(br.readLine());
 		
 		R = stoi(st.nextToken());
-		C= stoi(st.nextToken());
+		C = stoi(st.nextToken());
 		K = stoi(st.nextToken());
 		
 		score = 0;
 		initMap();
 		golem = new Golem[K];
+	}
+	
+	private static void initMap() {
+		m = new int[R][C];
+		for(int i=0; i<R; i++) {
+			for(int j=0; j<C; j++) {
+				m[i][j] = -1;
+			}
+		}
+	}
+	
+	
+	public static void main(String[] args) throws Exception{
+		// TODO Auto-generated method stub
+		init();
 		
 		for(int k=0; k<K; k++) {
 			st = new StringTokenizer(br.readLine());
@@ -52,8 +73,7 @@ public class Main {
 			rMax = 0;
 			v = new boolean[K];
 			
-			drop(k,-2,c,e);
-			
+			drop(k, -2, c, e);
 		}
 		
 		System.out.println(score);
@@ -67,7 +87,7 @@ public class Main {
 			}
 			
 			if(cj>=2) {
-				if((ci == -2 && m[ci + 2][cj - 1] == -1) || (m[ci + 2][cj - 1] == -1 && m[ci + 1][cj] == -1 && m[ci + 1][cj - 2] == -1) || (m[ci + 2][cj - 1] == -1 && m[ci + 1][cj - 2] == -1 && m[ci][cj - 2] == -1)) {
+				if((ci == -2 && m[ci + 2][cj - 1] == -1) || ((ci == -1) && m[ci + 2][cj - 1] == -1 && m[ci + 1][cj] == -1 && m[ci + 1][cj - 2] == -1) || (m[ci + 2][cj - 1] == -1 && m[ci + 1][cj - 2] == -1 && m[ci][cj - 2] == -1)) {
 					ci++;
 					cj--;
 					e = (e+3) %4;
@@ -114,31 +134,23 @@ public class Main {
 			rMax = Math.max(rMax, ri);
 			
 			int e = curGol.dir;
-			ri = curGol.x + di[e];
-			int rj = curGol.y + dj[e];
+			ri = curGol.x+dx[e];
+			int rj = curGol.y +dy[e];
 			
-			for(int d=0; d<4; d++) {
-				int ni = ri + di[d];
-				int nj = rj + dj[d];
-				if(isRange(ni, nj)) {
-					if(m[ni][nj] == -1 || v[m[ni][nj]]) {
-						continue;
+			for(int i=0; i<4; i++) {
+				int nx = ri+ dx[i];
+				int ny = rj + dy[i];
+				
+				if(isRange(nx, ny)) {
+					if(m[nx][ny] != -1) {
+						if(!v[m[nx][ny]]) {
+							q.add(m[nx][ny]);
+							v[m[nx][ny]] = true;
+						}
 					}
-					
-					q.add(m[ni][nj]);
-					v[m[ni][nj]] = true;
 				}
 			}
 		}
 	}
 	
-	private static void initMap() {
-		m = new int[R][C];
-		for(int i=0; i<R; i++) {
-			for(int j=0; j<C; j++) {
-				m[i][j] = -1;
-			}
-		}
-	}
-
 }

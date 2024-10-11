@@ -169,10 +169,13 @@ public class Main {
 					start.x += dx[dir];
 					start.y += dy[dir];
 					
-					if(person[i].isSame(store[i])) {
-						map[person[i].x][person[i].y] = 2;
-					}
 				}
+			}
+		}
+		
+		for(int i=0; i<m; i++) {
+			if(person[i].isSame(store[i])) {
+				map[person[i].x][person[i].y] = 2;
 			}
 		}
 		
